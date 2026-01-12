@@ -1,0 +1,63 @@
+<div class="container section">
+  <header class="section-header">
+    <h1>Your Shopping Cart</h1>
+  </header>
+
+  @if (cart$ | async; as cart) {
+    <div class="cart-container">
+      @if (cart.bikes.length === 0 && cart.accessories.length === 0) {
+        <div class="empty-state">
+          <p>Your cart is empty.</p>
+          <a routerLink="/" class="btn-primary">Browse Products</a>
+        </div>
+      } @else {
+        <div class="cart-layout">
+          <div class="cart-items">
+            <!-- Bikes -->
+            @for (bike of cart.bikes; track bike.id) {
+              <div class="item">
+                <div class="item-info">
+                  <h4>{{ bike.name }}</h4>
+                  <span class="item-cat">{{ bike.category }}</span>
+                </div>
+                <div class="item-price">${{ bike.price }}</div>
+                <button class="btn-remove" (click)="removeBike(bike)">Remove</button>
+              </div>
+            }
+
+            <!-- Accessories -->
+            @for (acc of cart.accessories; track acc.id) {
+              <div class="item">
+                <div class="item-info">
+                  <h4>{{ acc.name }}</h4>
+                  <span class="item-cat">Accessory</span>
+                </div>
+                <div class="item-price">${{ acc.price }}</div>
+                <button class="btn-remove" (click)="removeAccessory(acc)">Remove</button>
+              </div>
+            }
+          </div>
+
+          <aside class="cart-summary">
+            <h3>Order Summary</h3>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span>${{ totalPrice$ | async }}</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span>Free</span>
+            </div>
+            <div class="summary-total">
+              <span>Total</span>
+              <span>${{ totalPrice$ | async }}</span>
+            </div>
+            <button class="btn-checkout">Checkout Now</button>
+          </aside>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="loader">Loading cart...</div>
+  }
+</div>

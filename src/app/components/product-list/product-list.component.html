@@ -1,0 +1,56 @@
+<div class="container section">
+  <header class="section-header">
+    <h1>Our Products</h1>
+    <div class="filters">
+      <button [class.active]="filter === 'all'" (click)="filter = 'all'">All</button>
+      <button [class.active]="filter === 'bikes'" (click)="filter = 'bikes'">Bikes</button>
+      <button [class.active]="filter === 'accessories'" (click)="filter = 'accessories'">Accessories</button>
+    </div>
+  </header>
+
+  @if (loading) {
+    <div class="loader">
+      Loading products...
+    </div>
+  } @else {
+    <div class="grid">
+      <!-- Bikes -->
+      @if (filter === 'all' || filter === 'bikes') {
+        @for (bike of bikes; track bike.id) {
+          <div class="card">
+            <div class="card-img" [style.background-image]="bike.imageUrl ? 'url(' + bike.imageUrl + ')' : 'linear-gradient(45deg, #e2e8f0, #cbd5e1)'">
+              <span class="category">{{ bike.category }}</span>
+            </div>
+            <div class="card-body">
+              <h3>{{ bike.name }}</h3>
+              <p class="desc">{{ bike.description }}</p>
+              <div class="card-footer">
+                <span class="price">${{ bike.price }}</span>
+                <button class="btn-add" (click)="addBikeToCart(bike)">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        }
+      }
+
+      <!-- Accessories -->
+      @if (filter === 'all' || filter === 'accessories') {
+        @for (acc of accessories; track acc.id) {
+          <div class="card">
+            <div class="card-img" [style.background-image]="acc.imageUrl ? 'url(' + acc.imageUrl + ')' : 'linear-gradient(45deg, #f1f5f9, #e2e8f0)'">
+              <span class="category">Accessory</span>
+            </div>
+            <div class="card-body">
+              <h3>{{ acc.name }}</h3>
+              <p class="desc">{{ acc.description }}</p>
+              <div class="card-footer">
+                <span class="price">${{ acc.price }}</span>
+                <button class="btn-add" (click)="addAccessoryToCart(acc)">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        }
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,16 @@
+<nav class="nav">
+  <div class="container nav-content">
+    <a routerLink="/" class="logo">Bike<span>Store</span></a>
+    <div class="links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Products</a>
+      <a routerLink="/cart" routerLinkActive="active" class="cart-link">
+        Cart
+        @if (cartCount$ | async; as count) {
+          @if (count > 0) {
+            <span class="badge">{{ count }}</span>
+          }
+        }
+      </a>
+    </div>
+  </div>
+</nav>
